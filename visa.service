@@ -1,0 +1,12 @@
+[Unit]
+Description=Visa Web Crawler
+
+[Service]
+ExecStart=/usr/bin/python3.7 /path/to/script/visa.py
+Restart=always
+RestartSec=60
+User=user
+Group=user
+
+[Install]
+WantedBy=multi-user.target
