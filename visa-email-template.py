@@ -105,7 +105,7 @@ def crawl_website_for_slot(url, filename, prefecture, visa_name, desk_ids):
         else:
             found = slot_available(url)
         
-        if True:
+        if found:
             logging.info('{}: SLOT AVAILABLE'.format(prefecture))
             current_time = datetime.now().strftime("%H:%M:%S")
             message = "{} - {} : Creneau(x) detecte(s) pour {} : {}".format(current_time, prefecture, visa_name, url)
