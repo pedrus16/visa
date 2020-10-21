@@ -74,4 +74,64 @@ mail_repicients = [
 
 ### Appointment configuration
 
-// TODO
+To tell the script what prefectures and appointments to check you need to edit the `appointments.py` file.
+```python
+appointments = [
+    {
+        # URL of the appointment page (the one with the checkbox to accept the conditions)
+        'url': 'http://www.hauts-de-seine.gouv.fr/booking/create/12069/0',
+
+        'desk_ids': None,
+
+        # A unique name without spaces or special characters. this is used for naming temporary files
+        'unique_name': 'nanterre_renouv_privee',
+
+        # This is used for the tweet message
+        'prefecture_name': 'NANTERRE',
+        'appointment_name': 'Renouvellement de titre de séjour "vie privée et familiale"',
+    },
+    # Add more as needed
+]
+```
+
+Once this is done, check if your script works by running:
+
+`python3 ~/visa/email/visa.py` for emails
+
+or
+
+`python3 ~/visa/twitter/visa.py` for Twitter
+
+If no error appears and logs are added in the `visa.log` file, you can proceed to the next step.
+
+## Run as a service
+
+To run the script continuously and check for appointments 24/7 you can use systemd to run it as a service.
+
+Copy `visa.service` to `/etc/systemd/system/` and edit the file:
+
+Modify the paths on line 5 to match python and your script locations
+
+```
+ExecStart=/usr/bin/python3.7 ~visa/twitter/visa.py
+```
+
+Also change the user and group names on lines 8-9 to match yours:
+```
+User=user
+Group=user
+```
+
+# Usage
+
+Enable the service with (this will start the service on boot)
+
+`systemctl enable visa.service`
+
+Start the service manually with:
+
+`systemctl start visa.service`
+
+And you can stop the service by running:
+
+`systemctl stop visa.service`
