@@ -107,7 +107,7 @@ Go on the page where the list of choices appear, right click on the first choice
 
 The source code of the page should appear.
 
-Find the `<input type="radio" ...` element, copy its id attribute and add it to the list. Do this 
+Find the `<input type="radio" ...` element, copy its id attribute and add it to the list. Do this for each choice.
 
 ![counter](doc/html.PNG)
 
