@@ -14,20 +14,19 @@ Following the [installation instructions](https://selenium-python.readthedocs.io
 
 # Installation
 
-Clone the repo.
-  
-`git clone https://github.com/pedrus16/visa.git ~/visa`
+To send alerts using emails, download the `email` folder.
 
-To send alerts using emails you will need to edit and run the files in the `email/` directory.
-For twitter alerts, the scripts are in the `twitter/` directory.
+For twitter alerts, download the `twitter` folder.
+
+Copy the content (`config.py`, `appointments.py` and `visa.py`) in the directory of your choice. Our examples will suppose they are located in  `~/visa/`
 
 ## Configuration
 
-Edit the `config.py` file in the directory corresponding to your choice (`email/` or `twitter/`) and set the `directory_path` variable. This is where the logs and temporary files will be created and stored.
+Edit the `config.py` file and set the `directory_path` variable. This is where the logs and temporary files will be created and stored.
 
 You can use the script's folder as a path for example: 
 ```python
-directory_path = '~/visa/twitter/
+directory_path = '~/visa/
 ```
 
 After running the script once, a `visa.log` and other useful files for the script will be created in this directory.
@@ -38,7 +37,7 @@ If you want to send emails jump to [Email Configuration](https://github.com/pedr
 
 You will need to create a Twitter app on the [developper dashboard](https://developer.twitter.com/en/portal/dashboard) and generate the API keys.
 
-Edit the `twitter/config.py` file and add your keys:
+Edit the `config.py` file and add your keys:
 
 ```python
 twitter_keys = {
@@ -53,7 +52,7 @@ twitter_keys = {
 
 You will need a Gmail account with less secured apps authorized. I recommend creating a dedicated account because it might put your main account at risk. See [Authorize less secured apps](https://myaccount.google.com/lesssecureapps).
 
-Edit the `email/config.py` file and enter your gmail account credentials :
+Edit the `config.py` file and enter your gmail account credentials :
 
 ```python
 sender_email = 'my-email@gmail.com'
@@ -91,13 +90,12 @@ appointments = [
 ]
 ```
 
+`desk_ids` is required for some appointments because they have multiple counters to choose from.
+
+
 Once this is done, check if your script works by running:
 
-`python3 ~/visa/email/visa.py` for emails
-
-or
-
-`python3 ~/visa/twitter/visa.py` for Twitter
+`python3 ~/visa/visa.py`
 
 If no error appears and logs are added in the `visa.log` file, you can proceed to the next step.
 
@@ -105,12 +103,12 @@ If no error appears and logs are added in the `visa.log` file, you can proceed t
 
 To run the script continuously and check for appointments 24/7 you can use systemd to run it as a service.
 
-Copy `visa.service` to `/etc/systemd/system/` and edit the file:
+Download the `visa.service` file from github and place it in `/etc/systemd/system/`.
 
-Modify the paths on line 5 to match python and your script locations
+Then modify the paths on line 5 to match python and your script locations
 
 ```
-ExecStart=/usr/bin/python3.7 ~visa/twitter/visa.py
+ExecStart=/usr/bin/python3.7 ~visa/visa.py
 ```
 
 Also change the user and group names on lines 8-9 to match yours:
