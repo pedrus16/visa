@@ -70,13 +70,14 @@ mail_repicients = [
 
 ### Appointment configuration
 
-To tell the script what prefectures and appointments to check you need to edit the `appointments.py` file.
+To tell the script what prefectures and appointments to check, you need to edit the `appointments.py` file.
 ```python
 appointments = [
     {
         # URL of the appointment page (the one with the checkbox to accept the conditions)
         'url': 'http://www.hauts-de-seine.gouv.fr/booking/create/12069/0',
-
+        
+        # Add a list of HTML ids of the radio elements
         'desk_ids': None,
 
         # A unique name without spaces or special characters. this is used for naming temporary files
@@ -89,15 +90,34 @@ appointments = [
     # Add more as needed
 ]
 ```
+`desk_ids` is required for appointments that have multiple counters to choose from. If you have a list of choices like the image below when clicking on "Effectuer une demande de rendez-vous" you will need to fill this value in. If not, just set `desk_ids` to `None` and skip the *How to find the desk IDs* part.
 
-`desk_ids` is required for some appointments because they have multiple counters to choose from.
+![counter](doc/visa-counter.PNG)
 
+#### How to find the desk IDs
 
-Once this is done, check if your script works by running:
+This is tedious part and I should automate it but for now you have to manually find the IDs of the radio buttons in the HTML page and write them down in a list, like so:
+
+```
+`desk_ids`: ['planning14673', 'planning14806', 'planning14932']
+```
+Go on the page where the list of choices appear, right click on the first choice and click *Inspect*.
+
+![counter](doc/inspect.PNG)
+
+The source code of the page should appear.
+
+Find the `<input type="radio" ...` element, copy its id attribute and add it to the list. Do this 
+
+![counter](doc/html.PNG)
+
+### Is It Working?
+
+Once all the configuration is done, check if your script works by running:
 
 `python3 ~/visa/visa.py`
 
-If no error appears and logs are added in the `visa.log` file, you can proceed to the next step.
+If no error appears on the console and in the `visa.log` file, you can proceed to the next step.
 
 ## Run as a service
 
