@@ -13,9 +13,9 @@ from selenium.webdriver.chrome.service import Service
 from twython import Twython
 
 import config
-import appointments
+from appointments import appointments
 
-log_path = directory_path + 'visa.log'
+log_path = config.directory_path + 'visa.log'
 logging.basicConfig(format='%(asctime)s %(levelname)-8s %(message)s', filename=log_path,level=logging.INFO)
 
 chrome_options = Options()
@@ -73,9 +73,9 @@ def slot_available(url, desk_id=None, delay_second=10):
 
 def crawl_website_for_slot(url, unique_name, prefecture_name, visa_name, desk_ids):
     try:
-        file = open(directory_path + unique_name + '_last.txt', 'r+')
+        file = open(config.directory_path + unique_name + '_last.txt', 'r+')
     except OSError:
-        file = open(directory_path + unique_name + '_last.txt', 'w+')
+        file = open(config.directory_path + unique_name + '_last.txt', 'w+')
 
     try:
         found = False
@@ -90,7 +90,7 @@ def crawl_website_for_slot(url, unique_name, prefecture_name, visa_name, desk_id
         
         if found:
             logging.info('{}: SLOT AVAILABLE'.format(prefecture_name))
-            twitter = Twython(twitter_keys['api_key'], twitter_keys['api_key_secret'], twitter_keys['access_token'], twitter_keys['access_token_secret'])
+            twitter = Twython(config.twitter_keys['api_key'], config.twitter_keys['api_key_secret'], config.twitter_keys['access_token'], config.twitter_keys['access_token_secret'])
             current_time = datetime.now().strftime("%H:%M:%S")
             message = "{} - {} : Créneau(x) détecté(s) pour {} : {}".format(current_time, prefecture_name, visa_name, url)
             last_result = file.read()
@@ -100,8 +100,8 @@ def crawl_website_for_slot(url, unique_name, prefecture_name, visa_name, desk_id
                 logging.info('{}: NEW AVAILABLE SLOT: TWEETING!'.format(prefecture_name))
 
                 # print(message)
-                driver.save_screenshot(directory_path + 'screenshot.png')
-                screenshot = open(directory_path + 'screenshot.png', 'rb')
+                driver.save_screenshot(config.directory_path + 'screenshot.png')
+                screenshot = open(config.directory_path + 'screenshot.png', 'rb')
                 response = twitter.upload_media(media=screenshot)
                 twitter.update_status(status=message, media_ids=[response['media_id']])
             file.seek(0)
@@ -124,7 +124,7 @@ logging.info('START')
 start_time = datetime.now()
 
 for appointment in appointments:
-    crawl_website_for_slot(appointment.url, appointment.unique_name, appointment.prefecture_name, appointment.appointment_name, appointment.desk_ids)
+    crawl_website_for_slot(appointment['url'], appointment['unique_name'], appointment['prefecture_name'], appointment['appointment_name'], appointment['desk_ids'])
 
 driver.quit()
 logging.info('END: {}'.format(datetime.now() - start_time))

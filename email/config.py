@@ -7,6 +7,4 @@ sender_email = ''
 sender_password = ''
 
 # List of recipients emails
-mail_repicients = [
-    ''
-]
+mail_repicients = ['']

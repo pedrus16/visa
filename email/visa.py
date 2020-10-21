@@ -13,12 +13,12 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
 
 import config
-import appointments
+from appointments import appointments
 
 port = 465  # For SSL
 smtp_server = "smtp.gmail.com"
 
-log_path = directory + 'visa.log'
+log_path = config.directory_path + 'visa.log'
 logging.basicConfig(format='%(asctime)s %(levelname)-8s %(message)s', filename=log_path,level=logging.INFO)
 
 chrome_options = Options()
@@ -31,9 +31,9 @@ driver.implicitly_wait(10)
 def send_email(message):
     context = ssl.create_default_context()
     with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
-        server.login(sender_email, sender_password)
-        for address in mail_repicients:
-            server.sendmail(sender_email, address, message)
+        server.login(config.sender_email, config.sender_password)
+        for address in config.mail_repicients:
+            server.sendmail(config.sender_email, address, message)
 
 def check_for_error_in_page():
     assert '502 Bad Gateway' not in driver.page_source, '502 Bad Gateway'
@@ -81,11 +81,11 @@ def slot_available(url, desk_id=None, delay_second=10):
     
     return False
 
-def crawl_website_for_slot(url, filename, prefecture, visa_name, desk_ids):
+def crawl_website_for_slot(url, unique_name, prefecture_name, visa_name, desk_ids):
     try:
-        file = open(filename, 'r+')
+        file = open(config.directory_path + unique_name + '_last.txt', 'r+')
     except OSError:
-        file = open(filename, 'w+')
+        file = open(config.directory_path + unique_name + '_last.txt', 'w+')
 
     try:
         found = False
@@ -99,14 +99,14 @@ def crawl_website_for_slot(url, filename, prefecture, visa_name, desk_ids):
             found = slot_available(url)
         
         if found:
-            logging.info('{}: SLOT AVAILABLE'.format(prefecture))
+            logging.info('{}: SLOT AVAILABLE'.format(prefecture_name))
             current_time = datetime.now().strftime("%H:%M:%S")
-            message = "{} - {} : Creneau(x) detecte(s) pour {} : {}".format(current_time, prefecture, visa_name, url)
+            message = "{} - {} : Creneau(x) detecte(s) pour {} : {}".format(current_time, prefecture_name, visa_name, url)
             last_result = file.read()
             if '1' in last_result:
-                logging.info('{}: SLOT ALREADY AVAILABLE: SKIPPING EMAIL'.format(prefecture))
+                logging.info('{}: SLOT ALREADY AVAILABLE: SKIPPING EMAIL'.format(prefecture_name))
             else:
-                logging.info('{}: NEW AVAILABLE SLOT: SENDING EMAIL!'.format(prefecture))
+                logging.info('{}: NEW AVAILABLE SLOT: SENDING EMAIL!'.format(prefecture_name))
 
                 send_email("""\
                 VISA
@@ -117,15 +117,15 @@ def crawl_website_for_slot(url, filename, prefecture, visa_name, desk_ids):
             file.write('1')
             file.truncate()
         else:
-            logging.info('{}: NO SLOT AVAILABLE'.format(prefecture))
+            logging.info('{}: NO SLOT AVAILABLE'.format(prefecture_name))
             file.seek(0)
             file.write('0')
             file.truncate()
 
     except AssertionError as err:
-        logging.error('{}: SITE KO ({})'.format(prefecture, err))
+        logging.error('{}: SITE KO ({})'.format(prefecture_name, err))
     except:
-        logging.error('{}: UNEXPECTED ERROR: {}'.format(prefecture, sys.exc_info()))
+        logging.error('{}: UNEXPECTED ERROR: {}'.format(prefecture_name, sys.exc_info()))
     finally:
         file.close()
 
@@ -133,7 +133,7 @@ logging.info('START')
 start_time = datetime.now()
 
 for appointment in appointments:
-    crawl_website_for_slot(appointment.url, appointment.unique_name, appointment.prefecture_name, appointment.appointment_name, appointment.desk_ids)
+    crawl_website_for_slot(appointment['url'], appointment['unique_name'], appointment['prefecture_name'], appointment['appointment_name'], appointment['desk_ids'])
 
 driver.quit()
 logging.info('END: {}'.format(datetime.now() - start_time))
