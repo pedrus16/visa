@@ -1,6 +1,3 @@
-# visa
-visa crawler script
-
 # Requirements
 
 The script requires python3 and uses selenium with a chrome to function.
@@ -135,3 +132,7 @@ Start the service manually with:
 And you can stop the service by running:
 
 `systemctl stop visa.service`
+
+# Help & Contact
+
+If you have any issue with the installation or for any other reason you can contact me on twitter [@NanterreRDV](https://twitter.com/NanterreRdv) (FR or EN)
