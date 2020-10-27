@@ -39,27 +39,32 @@ def slot_available(url, desk_id=None, delay_second=10):
 
     check_for_error_in_page()
 
-    # Step #1
-    condition_checkbox = driver.find_element_by_id('condition')
-    submit_button = driver.find_element_by_name('nextButton')
-    condition_checkbox.send_keys(Keys.SPACE)
-    submit_button.send_keys(Keys.SPACE)
-    time.sleep(delay_second)
+    suffix_length = 10
 
-    check_for_error_in_page()
+    # Step #1
+    last_url = driver.current_url
+    while last_url[-suffix_length:] == driver.current_url[-suffix_length:]:
+        condition_checkbox = driver.find_element_by_id('condition')
+        submit_button = driver.find_element_by_name('nextButton')
+        condition_checkbox.send_keys(Keys.SPACE)
+        submit_button.send_keys(Keys.SPACE)
+        time.sleep(delay_second)
+        check_for_error_in_page()
 
     if desk_id and 'Veuillez recommencer' in driver.page_source:
         return False
 
     # Step 2
     if desk_id:
-        radio_button_list = driver.find_element_by_id(desk_id)
-        submit_button = driver.find_element_by_name('nextButton')
-        radio_button_list.send_keys(Keys.SPACE)
-        submit_button.send_keys(Keys.SPACE)
-        time.sleep(delay_second)
+        last_url = driver.current_url
+        while last_url[-suffix_length:] == driver.current_url[-suffix_length:]:
+            radio_button_list = driver.find_element_by_id(desk_id)
+            submit_button = driver.find_element_by_name('nextButton')
+            radio_button_list.send_keys(Keys.SPACE)
+            submit_button.send_keys(Keys.SPACE)
+            time.sleep(delay_second)
+            check_for_error_in_page()
 
-    check_for_error_in_page()
     
     # Result Page
     try:
