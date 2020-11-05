@@ -32,7 +32,7 @@ def check_for_error_in_page():
 
     return True
 
-def slot_available(url, desk_id=None, delay_second=10):
+def slot_available(url, delay_second=5):
     driver.get(url)
     driver.delete_all_cookies()
     time.sleep(delay_second)
@@ -51,47 +51,48 @@ def slot_available(url, desk_id=None, delay_second=10):
         time.sleep(delay_second)
         check_for_error_in_page()
 
-    if desk_id and 'Veuillez recommencer' in driver.page_source:
-        return False
+    # Check if there is counter selection before the booking page
+    radio_buttons = driver.find_elements_by_xpath('//fieldset[@id="fchoix_Booking"]//input[@type="radio"]')
 
-    # Step 2
-    if desk_id:
+    # No counter selection, check if booking page is accessible
+    if len(radio_buttons) == 0:
+        try:
+            next_button = driver.find_element_by_name('nextButton')
+            return True
+        except:
+            pass
+
+    # Counter radio buttons found, checking each of them for appointment
+    for i in range(len(radio_buttons)):
+        radio_button = driver.find_element_by_xpath(f'//fieldset[@id="fchoix_Booking"]/p[{i + 1}]/input[@type="radio"]')
         last_url = driver.current_url
         while last_url[-suffix_length:] == driver.current_url[-suffix_length:]:
-            radio_button_list = driver.find_element_by_id(desk_id)
             submit_button = driver.find_element_by_name('nextButton')
-            radio_button_list.send_keys(Keys.SPACE)
+            radio_button.send_keys(Keys.SPACE)
             submit_button.send_keys(Keys.SPACE)
             time.sleep(delay_second)
             check_for_error_in_page()
 
-    
-    # Result Page
-    try:
-        next_button = driver.find_element_by_name('nextButton')
-        
-        return True
-    except:
-        pass
-    
+        # Checking if booking page is accessible
+        try:
+            next_button = driver.find_element_by_name('nextButton')
+            return True
+        except:
+            driver.back()
+            check_for_error_in_page()
+            pass
+
+    # Booking page not accessible
     return False
 
-def crawl_website_for_slot(url, unique_name, prefecture_name, visa_name, desk_ids):
+def crawl_website_for_slot(url, unique_name, prefecture_name, visa_name):
     try:
         file = open(config.directory_path + unique_name + '_last.txt', 'r+')
     except OSError:
         file = open(config.directory_path + unique_name + '_last.txt', 'w+')
 
     try:
-        found = False
-        if desk_ids:
-            for desk_id in desk_ids:
-                found = found or slot_available(url, desk_id)
-                if found:
-                    break
-                time.sleep(15)
-        else:
-            found = slot_available(url)
+        found = slot_available(url)
         
         if found:
             logging.info('{}: SLOT AVAILABLE'.format(prefecture_name))
@@ -104,7 +105,6 @@ def crawl_website_for_slot(url, unique_name, prefecture_name, visa_name, desk_id
             else:
                 logging.info('{}: NEW AVAILABLE SLOT: TWEETING!'.format(prefecture_name))
 
-                # print(message)
                 driver.save_screenshot(config.directory_path + 'screenshot.png')
                 screenshot = open(config.directory_path + 'screenshot.png', 'rb')
                 response = twitter.upload_media(media=screenshot)
@@ -129,7 +129,7 @@ logging.info('START')
 start_time = datetime.now()
 
 for appointment in appointments:
-    crawl_website_for_slot(appointment['url'], appointment['unique_name'], appointment['prefecture_name'], appointment['appointment_name'], appointment['desk_ids'])
+    crawl_website_for_slot(appointment['url'], appointment['unique_name'], appointment['prefecture_name'], appointment['appointment_name'])
 
 driver.quit()
 logging.info('END: {}'.format(datetime.now() - start_time))
