@@ -36,6 +36,13 @@ appointments = [
         'prefecture_name': 'NANTERRE',
         'appointment_name': 'CARTE DE SÉJOUR "RECHERCHE D\'EMPLOI OU CRÉATION D\'ENTREPRISE" OU "AUTORISATION PROVISOIRE DE SÉJOUR"',
     },
+    {
+        'url': 'https://www.hauts-de-seine.gouv.fr/booking/create/13525',
+        'desk_ids': None,
+        'unique_name': 'nanterre_naturalisation',
+        'prefecture_name': 'NANTERRE',
+        'appointment_name': 'NATURALISATION PAR DÉCRET',
+    },
     # BOULOGNE
     {
         'url': 'https://www.hauts-de-seine.gouv.fr/booking/create/12249/0',
@@ -59,14 +66,6 @@ appointments = [
         'prefecture_name': 'SARCELLES',
         'appointment_name': 'Examen de situation/PRISE DE RDV',
     },
-    # VAL D'OISE
-    {
-        'url': 'https://www.val-doise.gouv.fr/booking/create/13860',
-        'desk_ids': None,
-        'unique_name': 'val_d_oise_renouv',
-        'prefecture_name': 'VAL-D\'OISE',
-        'appointment_name': 'Renouvellement d\'un titre de séjour',
-    },
     # SEINE ET MARNE
     {
         'url': 'https://www.seine-et-marne.gouv.fr/booking/create/30500/0',
@@ -78,9 +77,17 @@ appointments = [
     # HAUTE-GARONNE
     {
         'url': 'https://www.haute-garonne.gouv.fr/booking/create/8853/',
-        'desk_ids': ['planning24405', 'planning24414', 'planning24423'],
+        'desk_ids': ['planning24405', 'planning24414', 'planning24423', 'planning24433'],
         'unique_name': 'haute_garonne_renouv',
         'prefecture_name': 'HAUTE-GARONNE',
         'appointment_name': 'RENOUVELLEMENT DE TITRE DE SÉJOUR ET CHANGEMENT DE STATUT',
     },
+    # PARIS
+    {
+        'url': 'http://pprdv.interieur.gouv.fr/booking/create/876',
+        'desk_ids': None,
+        'unique_name': 'paris_medic',
+        'prefecture_name': 'PARIS',
+        'appointment_name': 'Demande d’admission exceptionnelle au séjour au regard du travail (CRE Truffaut)',
+    }
 ]
