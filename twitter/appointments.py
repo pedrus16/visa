@@ -37,6 +37,12 @@ appointments = [
         'prefecture_name': 'NANTERRE',
         'appointment_name': 'NATURALISATION PAR DÉCRET',
     },
+    {
+        'url': 'https://www.hauts-de-seine.gouv.fr/booking/create/9087',
+        'unique_name': 'nanterre_natur_decl',
+        'prefecture_name': 'NANTERRE',
+        'appointment_name': 'NATURALISATION PAR DÉCLARATION (FRATRIE OU ASCENDANT DE FRANÇAIS) – PRÉFECTURE DE NANTERRE',
+    },
     # BOULOGNE
     {
         'url': 'https://www.hauts-de-seine.gouv.fr/booking/create/12249/0',

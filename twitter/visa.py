@@ -26,13 +26,13 @@ driver = webdriver.Chrome(options=chrome_options)
 driver.implicitly_wait(10)
 
 def check_for_error_in_page():
-    assert '502 Bad Gateway' not in driver.page_source, '502 Bad Gateway'
-    assert '503 Service Unavailable' not in driver.page_source, '503 Service Unavailable'
-    assert '504 Gateway Timeout' not in driver.page_source, '504 Gateway Timeout'
+    assert '<h1>502 Bad Gateway</h1>' not in driver.page_source, '502 Bad Gateway'
+    assert '<h1>503 Service Unavailable</h1>' not in driver.page_source, '503 Service Unavailable'
+    assert '<h1>504 Gateway Timeout</h1>' not in driver.page_source, '504 Gateway Timeout'
 
     return True
 
-def slot_available(url, delay_second=5):
+def slot_available(url, delay_second=8):
     driver.get(url)
     driver.delete_all_cookies()
     time.sleep(delay_second)
