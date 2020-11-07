@@ -83,5 +83,12 @@ appointments = [
         'unique_name': 'paris_medic',
         'prefecture_name': 'PARIS',
         'appointment_name': 'Demande d’admission exceptionnelle au séjour au regard du travail (CRE Truffaut)',
+    },
+    # ESSONNE
+    {
+        'url': 'https://www.essonne.gouv.fr/booking/create/32237/0',
+        'unique_name': 'essonne_vie_prof',
+        'prefecture_name': 'ESSONNE',
+        'appointment_name': 'AES-Vie professionnelle',
     }
 ]
