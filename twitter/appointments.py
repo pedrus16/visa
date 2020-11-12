@@ -84,11 +84,24 @@ appointments = [
         'prefecture_name': 'PARIS',
         'appointment_name': 'Demande d’admission exceptionnelle au séjour au regard du travail (CRE Truffaut)',
     },
+    {
+        'url': 'http://pprdv.interieur.gouv.fr/booking/create/976/0',
+        'unique_name': 'paris_etudiant',
+        'prefecture_name': 'PARIS',
+        'appointment_name': 'Titre de séjour étudiant',
+    },
     # ESSONNE
     {
         'url': 'https://www.essonne.gouv.fr/booking/create/32237/0',
         'unique_name': 'essonne_vie_prof',
         'prefecture_name': 'ESSONNE',
         'appointment_name': 'AES-Vie professionnelle',
+    },
+    # YVELINES
+    {
+        'url': 'https://www.yvelines.gouv.fr/booking/create/20024/0',
+        'unique_name': 'yvelines_naturalisation',
+        'prefecture_name': 'YVELINES',
+        'appointment_name': 'NATURALISATION PAR DÉCRET ET DÉCLARATION DE NATIONALITÉ',
     }
 ]
