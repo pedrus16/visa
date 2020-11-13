@@ -50,6 +50,12 @@ appointments = [
         'prefecture_name': 'BOULOGNE',
         'appointment_name': 'RENOUVELLEMENT DE TITRES DE SÉJOUR',
     },
+    {
+        'url': 'https://www.hauts-de-seine.gouv.fr/booking/create/12245',
+        'unique_name': 'boulogne_remise',
+        'prefecture_name': 'BOULOGNE',
+        'appointment_name': 'REMISE DE TITRE DE SÉJOUR ET DE TITRE DE VOYAGE',
+    },
     # SARCELLES
     {
         'url': 'https://www.val-doise.gouv.fr/booking/create/11404',
@@ -70,13 +76,6 @@ appointments = [
         'prefecture_name': 'MELUN',
         'appointment_name': 'DEMANDE D\'ADMISSION EXCEPTIONNELLE AU SÉJOUR',
     },
-    # HAUTE-GARONNE
-    {
-        'url': 'https://www.haute-garonne.gouv.fr/booking/create/8853/',
-        'unique_name': 'haute_garonne_renouv',
-        'prefecture_name': 'HAUTE-GARONNE',
-        'appointment_name': 'RENOUVELLEMENT DE TITRE DE SÉJOUR ET CHANGEMENT DE STATUT',
-    },
     # PARIS
     {
         'url': 'http://pprdv.interieur.gouv.fr/booking/create/876',
@@ -96,12 +95,5 @@ appointments = [
         'unique_name': 'essonne_vie_prof',
         'prefecture_name': 'ESSONNE',
         'appointment_name': 'AES-Vie professionnelle',
-    },
-    # YVELINES
-    {
-        'url': 'https://www.yvelines.gouv.fr/booking/create/20024/0',
-        'unique_name': 'yvelines_naturalisation',
-        'prefecture_name': 'YVELINES',
-        'appointment_name': 'NATURALISATION PAR DÉCRET ET DÉCLARATION DE NATIONALITÉ',
     }
 ]
