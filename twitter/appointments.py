@@ -41,7 +41,7 @@ appointments = [
         'url': 'https://www.hauts-de-seine.gouv.fr/booking/create/9087',
         'unique_name': 'nanterre_natur_decl',
         'prefecture_name': 'NANTERRE',
-        'appointment_name': 'NATURALISATION PAR DÉCLARATION (FRATRIE OU ASCENDANT DE FRANÇAIS) – PRÉFECTURE DE NANTERRE',
+        'appointment_name': 'NATURALISATION PAR DÉCLARATION (FRATRIE OU ASCENDANT DE FRANÇAIS)',
     },
     # BOULOGNE
     {
@@ -95,5 +95,12 @@ appointments = [
         'unique_name': 'essonne_vie_prof',
         'prefecture_name': 'ESSONNE',
         'appointment_name': 'AES-Vie professionnelle',
-    }
+    },
+    # BAS-RHIN
+    {
+        'url': 'http://www.bas-rhin.gouv.fr/booking/create/27623/0',
+        'unique_name': 'bas_rhin_malade',
+        'prefecture_name': 'BAS-RHIN',
+        'appointment_name': 'ETRANGERS MALADES - PROTECTION INTERNATIONALE (RÉFUGIÉS, PROTECTION SUBSIDIAIRE, APATRIDES)',
+    },
 ]
