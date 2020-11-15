@@ -98,7 +98,7 @@ def crawl_website_for_slot(url, unique_name, prefecture_name, visa_name):
             logging.info('{}: SLOT AVAILABLE'.format(prefecture_name))
             twitter = Twython(config.twitter_keys['api_key'], config.twitter_keys['api_key_secret'], config.twitter_keys['access_token'], config.twitter_keys['access_token_secret'])
             current_time = datetime.now().strftime("%H:%M:%S")
-            message = "{} - {} : Créneau(x) détecté(s) pour {} : {}".format(current_time, prefecture_name, visa_name, url)
+            message = "{} - {} : {}".format(prefecture_name, visa_name, url)
             last_result = file.read()
             if '1' in last_result:
                 logging.info('{}: SLOT ALREADY AVAILABLE: SKIPPING TWEET'.format(prefecture_name))
